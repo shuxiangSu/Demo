@@ -34,6 +34,7 @@
 
         </div>
         <script>
+
             new Vue({
                 el: '#BJ_PSD_Bench',
                 components: {
@@ -52,15 +53,16 @@
                         {
                         field: 'Status',
                         title: 'Machine Status'
-                        },
-                        {
-                        field: 'User',
-                        title: 'Current User'
-                        },
-                        {
-                        field: 'Schedule',
-                        title: 'Schedule and Book time'
                         }
+                        // },
+                        // {
+                        // field: 'User',
+                        // title: 'Current User'
+                        // },
+                        // {
+                        // field: 'Schedule',
+                        // title: 'Schedule and Book time'
+                        // }
                     ],
                     data:[],
                     options: {
@@ -68,9 +70,20 @@
                         showColumns: false
                     }
                 },
-                create() {
-                    this.getData();
-                    this.intervalGetData();
+                created: function() {
+                    var that = this;
+                    var url = "/freshTable/";
+                    $.get("freshTable", function(data){
+                        // var data = JSON.parse(data);
+                        // $('#BJ_PSD_Bench').bootstrapTable('load', data.machine);
+                        this.data = data.machine;
+                        console.log("1:", data.machine);
+                        $('#BJ_PSD_Bench').bootstrapTable({data:this.data});
+                        $('#BJ_PSD_Bench').bootstrapTable("refresh");
+                        
+                    });
+                    // this.getData();
+                    // this.intervalGetData();
                 },
                 methods: {
                     intervalGetData(){
@@ -81,13 +94,14 @@
                     getData() {
                         var that = this;
                         var url = "/freshTable/";
-                        $.get("/freshTable/", function(data){
-                            var data = JSON.parse(data);
-                            this.data=data.machine;
-                        })
+                        $.get("freshTable", function(data){
+                            console.log(data.machine);
+                            // var data = JSON.parse(data);
+                            this.thedata=data.machine;
+                        });
                     }
                 },
-                mouted() {
+                mouted: function() {
                     console.log(this.data + "mouted");
                 }
             })
