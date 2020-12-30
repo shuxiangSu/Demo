@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>PSD Bench Station View</title>
+        {% load static %}
+        <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+        <link rel="stylesheet" href="{% static 'css/bootstrap-table.css' %}">
+        <link rel="stylesheet" href="{% static 'css/multiple-select.min.css' %}">
+        
+        <script src="{% static 'js/jquery.min.js' %}"></script>
+        <script src="{% static 'js/bootstrap.min.js' %}"></script>
+        <script src="{% static 'js/Chart.min.js' %}"></script>
+        <script src="{% static 'js/vue.js' %}"></script>
+        <script src="{% static 'js/bootstrap-table.js' %}"></script>
+        <script src="{% static 'js/bootstrap-table.min.js' %}"></script>
+        <script src="{% static 'js/bootstrap-table-vue.min.js' %}"></script>
+    
+    </head>
+
+    <body>
+        <h1>Welcome to Beijing PSD Bench</h1>
+        <div class = "container-fluid">
+            <div id="BJ_PSD_Bench">
+                <bootstrap-table :columns="columns" :data="data" :options="options"></bootstrap-table>
+            </div>
+            <div>
+                <h5>Beijing PSD Bench maintant by xxx(EID:xxxxxx, Email:xxx@Honeywell.com), please contact the maintant stuff for help</h5>
+            </div>
+            <div>
+                <h5>{{machine}}</h5>
+            </div>
+
+        </div>
+        <script>
+            new Vue({
+                el: '#BJ_PSD_Bench',
+                components: {
+                'BootstrapTable': BootstrapTable
+                },
+                data: {
+                    columns: [
+                        {
+                        field: 'ID',
+                        title: 'Machine ID'
+                        },
+                        {
+                        field: 'Hostname',
+                        title: 'Machine HostName'
+                        },
+                        {
+                        field: 'Status',
+                        title: 'Machine Status'
+                        },
+                        {
+                        field: 'User',
+                        title: 'Current User'
+                        },
+                        {
+                        field: 'Schedule',
+                        title: 'Schedule and Book time'
+                        }
+                    ],
+                    data:[],
+                    options: {
+                        search: false,
+                        showColumns: false
+                    }
+                },
+                create() {
+                    this.getData();
+                    this.intervalGetData();
+                },
+                methods: {
+                    intervalGetData(){
+                        setInterval(()=>{
+                            this.getData();
+                        }, 3000)
+                    },
+                    getData() {
+                        var that = this;
+                        var url = "/freshTable/";
+                        $.get("/freshTable/", function(data){
+                            var data = JSON.parse(data);
+                            this.data=data.machine;
+                        })
+                    }
+                },
+                mouted() {
+                    console.log(this.data + "mouted");
+                }
+            })
+        </script>
+    </body>
+</html>
