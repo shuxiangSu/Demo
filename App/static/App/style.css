@@ -1,0 +1,61 @@
+/* ---------------------------------------------------
+    SIDEBAR STYLE
+----------------------------------------------------- */
+
+.wrapper {
+    display: flex;
+    width: 100%;
+    align-items: stretch;
+}
+
+
+#sidebar {
+    min-width: 250px;
+    max-width: 250px;
+    text-align: center;
+    background: #e5e8e9;
+    color: rgb(196, 36, 36);
+    -webkit-transition: all .3s;
+    -o-transition: all .3s;
+    transition: all .3s
+}
+
+#sidebar .logo {
+    display: block;
+    width: 200px;
+    height: 130px;
+    margin: 0 auto;
+}
+
+#sidebar ul{
+    position: sticky;
+    top: 20%;
+    left: 50%;
+}
+
+#sidebar a{
+    padding: 10px 0;
+    display: block;
+    font-size: 26px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #69d171;
+    border-bottom: 1px solid rgba(255,255,255,.1);
+}
+
+/* #Item1 {
+    position: relative;
+    top: 100px;
+}  */
+
+/* ---------------------------------------------------
+    CONTENT STYLE
+----------------------------------------------------- */
+
+#content {
+    width: 100%;
+    padding: 20px;
+    min-height: 100vh;
+    background: #fafafa;
+    transition: all 0.3s;
+}
+

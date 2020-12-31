@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang='en'>
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -8,6 +8,7 @@
         <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
         <link rel="stylesheet" href="{% static 'css/bootstrap-table.css' %}">
         <link rel="stylesheet" href="{% static 'css/multiple-select.min.css' %}">
+        <link rel="stylesheet" href="{% static 'App/style.css' %}">
         
         <script src="{% static 'js/jquery.min.js' %}"></script>
         <script src="{% static 'js/bootstrap.min.js' %}"></script>
@@ -15,25 +16,39 @@
         <script src="{% static 'js/vue.js' %}"></script>
         <script src="{% static 'js/bootstrap-table.min.js' %}"></script>
         <script src="{% static 'js/bootstrap-table-vue.min.js' %}"></script>
+        <script src="https://unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.min.js"></script>
     
     </head>
 
     <body>
-        <h1>Welcome to Beijing PSD Bench</h1>
-        <div class = "container-fluid">
-            <div id="BJ_PSD_Bench">
-                <bootstrap-table :columns="columns" :data="data" :options="options" :style="style"></bootstrap-table>
+        <!-- <div class="container-fluid"> -->
+            
+            <div class="wrapper", display>        
+                <nav id="sidebar" aria-label="">
+                    <a class="img logo rounded-circle mb-5" style="background-image: url(static/Img/fuji.jpg);"></a>
+                    <ul class="list-unstyled components mb-5">
+                        <li><a id="Item1">Item1</a></li>
+                        <li><a id="Item2">Item2</a></li>
+                    </ul>
+                </nav>
+                <div id="content">
+                    <h1>Welcome to Beijing PSD Bench</h1>
+                    <nav class="navbar navbar-expand-lg navbar-light bg-light" aria-label="">
+                    <div class = "container-fluid">
+                        <div id="BJ_PSD_Bench">
+                            <bootstrap-table :columns="columns" :data="data" :options="options" :style="style"></bootstrap-table>
+                        </div>
+                        <div>
+                            <h5>Beijing PSD Bench maintant by xxx(EID:xxxxxx, Email:xxx@Honeywell.com), please contact the maintant stuff for help</h5>
+                        </div>
+                    </div>
+                    </nav>
+                </div>
             </div>
-            <div>
-                <h5>Beijing PSD Bench maintant by xxx(EID:xxxxxx, Email:xxx@Honeywell.com), please contact the maintant stuff for help</h5>
-            </div>
-            <div>
-                <h5>{{machine}}</h5>
-            </div>
+        <!-- </div> -->
 
-        </div>
+        
         <script>
-
             var vm = new Vue({
                 el: '#BJ_PSD_Bench',
                 components: {
@@ -69,13 +84,13 @@
                         showColumns: false
                     },
                     style:{
-                        background: 'linear-gradient(to right, rgba(0, 255, 0, 0.2) 0% , rgba(0, 255, 0, 0.2) 55.00%, rgba(0, 255, 0, 0.0) 57.00%)'
+                        background:'dark'
+                        // background: 'linear-gradient(to right, rgba(0, 255, 0, 0.2) 0% , rgba(0, 255, 0, 0.2) 55.00%, rgba(0, 255, 0, 0.0) 57.00%)'
                     }
                 },
                 created: function() {
-                    var that = this;
-                    var url = "/freshTable/";
-                    $.get("freshTable", function(data){
+                    var url = "freshTable";
+                    $.get(url, function(data){
                         vm.data = data.machine;
                     });
                 },
