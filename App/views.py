@@ -17,5 +17,5 @@ def FreshStatus(request):
     returnList["machine"].append(sub2)
     returnList["machine"].append(sub3)
     returnList["machine"].append(sub4)
-    print(returnList)
+    # print(returnList)
     return JsonResponse(returnList, safe=False)
