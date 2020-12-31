@@ -13,7 +13,6 @@
         <script src="{% static 'js/bootstrap.min.js' %}"></script>
         <script src="{% static 'js/Chart.min.js' %}"></script>
         <script src="{% static 'js/vue.js' %}"></script>
-        <script src="{% static 'js/bootstrap-table.js' %}"></script>
         <script src="{% static 'js/bootstrap-table.min.js' %}"></script>
         <script src="{% static 'js/bootstrap-table-vue.min.js' %}"></script>
     
@@ -23,7 +22,7 @@
         <h1>Welcome to Beijing PSD Bench</h1>
         <div class = "container-fluid">
             <div id="BJ_PSD_Bench">
-                <bootstrap-table :columns="columns" :data="data" :options="options"></bootstrap-table>
+                <bootstrap-table :columns="columns" :data="data" :options="options" :style="style"></bootstrap-table>
             </div>
             <div>
                 <h5>Beijing PSD Bench maintant by xxx(EID:xxxxxx, Email:xxx@Honeywell.com), please contact the maintant stuff for help</h5>
@@ -35,7 +34,7 @@
         </div>
         <script>
 
-            new Vue({
+            var vm = new Vue({
                 el: '#BJ_PSD_Bench',
                 components: {
                 'BootstrapTable': BootstrapTable
@@ -52,59 +51,48 @@
                         },
                         {
                         field: 'Status',
-                        title: 'Machine Status'
+                        title: 'Machine Status',
+                        formatter: StatusFormater
+                        },
+                        {
+                        field: 'User',
+                        title: 'Current User'
+                        },
+                        {
+                        field: 'Schedule',
+                        title: 'Schedule and Book time'
                         }
-                        // },
-                        // {
-                        // field: 'User',
-                        // title: 'Current User'
-                        // },
-                        // {
-                        // field: 'Schedule',
-                        // title: 'Schedule and Book time'
-                        // }
                     ],
                     data:[],
                     options: {
                         search: false,
                         showColumns: false
+                    },
+                    style:{
+                        background: 'linear-gradient(to right, rgba(0, 255, 0, 0.2) 0% , rgba(0, 255, 0, 0.2) 55.00%, rgba(0, 255, 0, 0.0) 57.00%)'
                     }
                 },
                 created: function() {
                     var that = this;
                     var url = "/freshTable/";
                     $.get("freshTable", function(data){
-                        // var data = JSON.parse(data);
-                        // $('#BJ_PSD_Bench').bootstrapTable('load', data.machine);
-                        this.data = data.machine;
-                        console.log("1:", data.machine);
-                        $('#BJ_PSD_Bench').bootstrapTable({data:this.data});
-                        $('#BJ_PSD_Bench').bootstrapTable("refresh");
-                        
+                        vm.data = data.machine;
                     });
-                    // this.getData();
-                    // this.intervalGetData();
                 },
                 methods: {
-                    intervalGetData(){
-                        setInterval(()=>{
-                            this.getData();
-                        }, 3000)
-                    },
-                    getData() {
-                        var that = this;
-                        var url = "/freshTable/";
-                        $.get("freshTable", function(data){
-                            console.log(data.machine);
-                            // var data = JSON.parse(data);
-                            this.thedata=data.machine;
-                        });
-                    }
-                },
-                mouted: function() {
-                    console.log(this.data + "mouted");
+                    
                 }
-            })
+            });
+            function StatusFormater(value){
+                var html;
+                if(value=="Enable"){
+                    html="<span style='color:green'>"+value+"</span>";
+                }
+                else{
+                    html="<span style='color:red'>"+value+"</span>";
+                }
+                return html;
+            };
         </script>
     </body>
 </html>
